@@ -32,7 +32,6 @@ export default function CardItem({ id, title, description, onDelete }: Props) {
       {...attributes}
       className="group relative rounded-lg border border-gray-200 bg-white p-3 shadow-sm"
     >
-      {/* Drag handle: solo aquí van los listeners */}
       <button
         ref={setActivatorNodeRef}
         {...listeners}

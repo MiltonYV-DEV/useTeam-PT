@@ -120,7 +120,6 @@ export default function Board({ boardId }: { boardId: string }) {
     try {
       await createCard({ boardId, columnId: colId, title });
       setNewTitles((prev) => ({ ...prev, [colId]: "" }));
-      // refresca (igual llegará por WS, pero aseguramos)
       queryClient.invalidateQueries({ queryKey: ["board", boardId] });
     } catch (e) {
       console.error("Error creando tarjeta", e);
@@ -139,7 +138,7 @@ export default function Board({ boardId }: { boardId: string }) {
 
   return (
     <div className="p-6">
-      <header className="sticky rounded-xl top-0 z-10 mb-4 flex items-center justify-between border-b border-gray-200 shadow-lg bg-white/35 px-2 py-3 backdrop-blur">
+      <header className="rounded-xl top-0 z-10 mb-4 flex items-center justify-between border-b border-gray-200 shadow-lg bg-white/35 px-2 py-3 backdrop-blur">
         <div className="flex items-center gap-3">
           <div className="h-8 w-8 rounded-xl bg-gray-900 text-white grid place-items-center text-xs font-bold">
             KB
