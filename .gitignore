@@ -1,0 +1,49 @@
+# 🧠 Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+.pnpm-debug.log
+
+# 🏗️ Build y dist
+dist/
+build/
+tmp/
+temp/
+.out/
+.cache/
+
+# 🔧 Configuración del entorno
+.env
+.env.*
+!.env.example
+
+# 🚀 Archivos del sistema y del editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 🧪 Testing
+coverage/
+.nyc_output/
+jest-html-reporters-*.html
+
+# 🧰 Logs
+logs/
+*.log
+*.log.*
+npm-debug.log*
+
+# 🧩 TypeScript
+*.tsbuildinfo
+
+# 🐳 Docker
+docker-compose.override.yml
+do
+
