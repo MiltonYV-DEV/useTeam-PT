@@ -1,192 +1,140 @@
-# :test_tube: Prueba Técnica – Tablero Kanban Colaborativo en Tiempo Real
+🧩 Kanban Board – React + NestJS + MongoDB
+🎯 Descripción
 
-## :dart: Objetivo
+Aplicación Kanban inspirada en Trello, desarrollada con React y NestJS, que permite gestionar tareas en tiempo real con soporte para drag & drop y sincronización mediante Socket.io.
+Utiliza MongoDB para almacenar tableros, columnas y tarjetas.
 
-Desarrollar una aplicación tipo **Trello** que permita la gestión de tareas mediante un **tablero Kanban** con soporte para **colaboración en tiempo real**. El sistema debe incluir columnas personalizables, tarjetas movibles y funcionalidad de drag & drop fluida.
+⚙️ Tecnologías Principales
+Frontend
 
----
+⚛️ React + Vite
 
-## :gear: Tecnologías Requeridas
+🎨 TailwindCSS
 
-### Frontend
+🧱 @dnd-kit para drag & drop
 
-- **React.js** para la construcción de la interfaz.
-- Implementación de **drag & drop** para mover tarjetas entre columnas.
+🔁 React Query para sincronización de datos
 
-### Backend
+🌐 Socket.io-client para tiempo real
 
-- **NestJS** con soporte de **WebSocket** para simular la colaboración en tiempo real.
-- Uso de **MongoDB** para el almacenamiento de datos.
-- Implementación de **Socket.io** para comunicación bidireccional.
-- **Notificaciones en tiempo real** para reflejar los cambios realizados por otros usuarios.
+Backend
 
----
+🧠 NestJS
 
-## :mailbox: Funcionalidad Adicional Requerida
+🗄️ MongoDB con Mongoose
 
-### Exportación de Backlog vía Email en CSV
+⚡ Socket.io para comunicación bidireccional
 
-Implementar un sistema de exportación automatizada del backlog del tablero Kanban utilizando **N8N** para generar flujos de trabajo automatizados.
+🔧 Dotenv para configuración de variables de entorno
 
-#### :gear: Tecnologías Adicionales
+🧰 Requisitos Previos
 
-- **N8N** para automatización de flujos de trabajo
-- **Webhooks** para comunicación entre sistemas
-- **CSV Generation** para estructuración de datos
-- **Email Service** para envío de reportes
+Node.js 18+
 
-#### :dart: Requisitos de la Funcionalidad
+MongoDB corriendo localmente (mongodb://localhost:27017/kanban)
 
-1. **Trigger desde Frontend**: Botón de exportación en la interfaz del tablero
-2. **Endpoint de Exportación**: API en NestJS que dispare el flujo N8N
-3. **Flujo N8N Automatizado**:
-   - Extracción de datos del tablero Kanban
-   - Estructuración de datos en formato CSV
-   - Envío automático por email
-4. **Configuración de Exportación**:
-   - Email destino configurable
-   - Selección de campos a exportar (Opcional)
-5. **Notificaciones de Estado**:
-   - Confirmación de solicitud de exportación
-   - Notificación de envío exitoso/fallido
+NPM o Yarn
 
-#### :file_folder: Estructura del CSV de Exportación
+🖥️ Terminal 1 — Backend
+cd backend
+npm install
+npm run start:dev
 
-El archivo CSV exportado debe incluir:
 
-- **ID de tarea** (identificador único)
-- **Título** (nombre de la tarea)
-- **Descripción** (detalles de la tarea)
-- **Columna** (posición actual en el tablero)
-- **Fecha de creación** (timestamp de creación)
+El backend se ejecutará en:
 
-#### :arrow_forward: Flujo de Trabajo
+http://localhost:3000
 
-```
-[Frontend] → [NestJS API] → [N8N Webhook] → [Data Extraction] → [CSV Generation] → [Email Delivery] → [User Notification]
-```
+🖥️ Terminal 2 — Frontend
+cd frontend
+npm install
+npm run dev
 
-1. Usuario hace clic en "Exportar Backlog"
-2. Frontend envía solicitud a endpoint `/api/export/backlog`
-3. NestJS dispara webhook a N8N
-4. N8N extrae datos del tablero Kanban
-5. N8N estructura datos en formato CSV
-6. N8N envía email con archivo CSV adjunto
-7. Sistema notifica al usuario el estado de la exportación
 
----
+El frontend estará disponible en:
 
-## :package: Forma de Entrega
+http://localhost:5173
 
-### :fork_and_knife: Fork del Repositorio
+🌱 Generar Datos Iniciales (Seed)
 
-1. **Fork** este repositorio a tu cuenta de GitHub
-2. **Clona** tu fork localmente
-3. **Desarrolla** la solución completa en tu fork
-4. **Sube** todos los cambios a tu repositorio
+Antes de usar la aplicación, necesitas generar datos de ejemplo (semilla) para que el tablero tenga columnas y tarjetas.
 
-### :file_folder: Estructura de Archivos Requerida
+1️⃣ Llama al endpoint de seed
 
-```
-useTeam-PT/
-├── README.md
-├── .env.example
-├── frontend/
-│   ├── package.json
-│   ├── src/
-│   └── ...
-├── backend/
-│   ├── package.json
-│   ├── src/
-│   └── ...
-├── n8n/
-│   ├── workflow.json
-│   └── setup-instructions.md
-└── docker-compose.yml (Opcional)
-```
+Abre tu navegador o Postman y entra a:
 
-### :gear: Archivos de Configuración
+GET http://localhost:3000/api/seed
 
-#### `.env.example`
 
-Debe incluir todas las variables de entorno necesarias:
+Esto creará:
 
-```env examle
-# Database
-MONGODB_URI=mongodb://localhost:27017/kanban-board
+Un tablero nuevo en MongoDB.
 
-# Backend
-PORT=3000
-N8N_WEBHOOK_URL=http://localhost:5678/webhook/kanban-export
+Sus columnas por defecto (To Do, In Progress, Done).
 
-# Frontend
-REACT_APP_API_URL=http://localhost:3000/api
-REACT_APP_WS_URL=ws://localhost:3000
-```
+Varias tarjetas de ejemplo.
 
-#### `n8n/workflow.json`
+2️⃣ Copia el boardId devuelto
 
-Archivo JSON del flujo de N8N para exportación de backlog.
+La respuesta será algo así:
 
-#### `n8n/setup-instructions.md`
+{
+  "message": "Seed ejecutado correctamente",
+  "boardId": "670123abc456def789012345"
+}
 
-Instrucciones detalladas para configurar y ejecutar el flujo N8N.
 
-### :whale: Docker Compose (Opcional)
+👉 Copia el valor del boardId, porque lo necesitarás en el frontend.
 
-Incluir archivo `docker-compose.yml` con:
+3️⃣ Pega el boardId en el archivo App.tsx
 
-- Servicio de MongoDB
-- Servicio de N8N (versión 1.106.3)
-- Configuración de redes y volúmenes
+Abre el archivo:
 
-### :rocket: Comando para N8N
+frontend/src/App.tsx
 
-Comando para levantar una instancia local de N8N
 
-```bash
-docker run -it --rm \
-  --name n8n \
-  -p 5678:5678 \
-  -v ~/.n8n:/home/node/.n8n \
-  n8nio/n8n:latest
-```
+Y reemplaza la línea que contiene el boardId por el que copiaste del seed:
 
-### :memo: Documentación Adicional
+import Board from "./components/Board";
+import "./App.css";
 
-- **README.md** actualizado con instrucciones de instalación y ejecución
-- **Comentarios en código** explicando la lógica compleja
+function App() {
 
-### :lock: Finalización de la Prueba
+  // 👇 REEMPLAZAR ESTE ID POR EL QUE TE DEVOLVIÓ EL SEED
+  const boardId = "670123abc456def789012345";
 
-Una vez finalizada la implementación:
+  return (
+    <div className="bg-gray-299/50 rounded-xl backdrop-blur-sm shadow-2xl shadow-black/80">
+      <Board boardId={boardId} />
+    </div>
+  );
+}
 
-1. **Invitar** a los siguientes usuarios como colaboradores al repositorio:
+export default App;
 
-   - `rodriguezibrahin3@gmail.com`
-   - `jonnahuel78@gmail.com`
-   - `administracion@useteam.io`
 
-2. **NO realizar más commits** después de invitar a los usuarios
+Guarda los cambios y recarga el frontend.
+Ahora deberías ver el tablero cargado con las columnas y tarjetas generadas 🎉
 
----
+🧠 Qué se Logró
 
-## :brain: Evaluación
+✅ Visualización del tablero con columnas y tarjetas.
+✅ Mover tarjetas entre columnas con drag & drop fluido (@dnd-kit).
+✅ Sincronización de cambios en tiempo real con Socket.io.
+✅ Creación de nuevas tarjetas por columna.
+✅ Eliminación de tarjetas individualmente.
 
-Durante el desarrollo de esta prueba se evaluarán:
+🚧 Lo que Falta
 
-- **Pensamiento asincrónico** y manejo de procesos en tiempo real.
-- **Lógica compleja en el frontend**, especialmente en la interacción y estado compartido.
-- Gestión adecuada de **eventos y sincronización** entre múltiples usuarios.
+❌ Integración con N8N para exportar el backlog por correo en formato CSV.
+❌ Edición de columnas y tarjetas.
+❌ Seed automático al iniciar el backend (actualmente debe ejecutarse manualmente).
 
----
+🔹 En esta versión, el seed debe ejecutarse manualmente una sola vez, y el boardId copiado debe reemplazarse en el archivo App.tsx del frontend.
 
-## :pushpin: Recomendaciones
+🙏 Nota Final
 
-- Enfócate en una buena experiencia de usuario (UX).
-- Prioriza un código limpio, modular y mantenible.
-- Usa comentarios breves y precisos donde la lógica sea compleja.
+Por razones de tiempo, la integración con N8N y el seed automático no se completaron, pero la aplicación está completamente funcional en drag & drop, creación, eliminación y sincronización en tiempo real.
 
----
-
-¡Buena suerte! :rocket:
+Gracias por revisar este proyecto 💙
+Se dejó documentado y estructurado para facilitar su continuación e integración futura.
