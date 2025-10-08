@@ -1,70 +1,73 @@
-🧩 Kanban Board – React + NestJS + MongoDB
-🎯 Descripción
+# 🧩 Kanban Board – React + NestJS + MongoDB
 
-Aplicación Kanban inspirada en Trello, desarrollada con React y NestJS, que permite gestionar tareas en tiempo real con soporte para drag & drop y sincronización mediante Socket.io.
-Utiliza MongoDB para almacenar tableros, columnas y tarjetas.
+## 🎯 Descripción
 
-⚙️ Tecnologías Principales
-Frontend
+Aplicación **Kanban** inspirada en Trello, desarrollada con **React** y **NestJS**, que permite gestionar tareas en tiempo real con soporte para **drag & drop** y sincronización mediante **Socket.io**.  
+Utiliza **MongoDB** para almacenar tableros, columnas y tarjetas.
 
-⚛️ React + Vite
+---
 
-🎨 TailwindCSS
+## ⚙️ Tecnologías Principales
 
-🧱 @dnd-kit para drag & drop
+### Frontend
+- ⚛️ **React + Vite**
+- 🎨 **TailwindCSS**
+- 🧱 **@dnd-kit** para drag & drop
+- 🔁 **React Query** para sincronización de datos
+- 🌐 **Socket.io-client** para tiempo real
 
-🔁 React Query para sincronización de datos
+### Backend
+- 🧠 **NestJS**
+- 🗄️ **MongoDB con Mongoose**
+- ⚡ **Socket.io** para comunicación bidireccional
+- 🔧 **Dotenv** para configuración de variables de entorno
 
-🌐 Socket.io-client para tiempo real
+---
 
-Backend
+## 🧰 Requisitos Previos
 
-🧠 NestJS
+- Node.js 18+
+- MongoDB corriendo localmente (`mongodb://localhost:27017/kanban`)
+- NPM o Yarn
 
-🗄️ MongoDB con Mongoose
+---
 
-⚡ Socket.io para comunicación bidireccional
+## 🖥️ Terminal 1 — Backend
 
-🔧 Dotenv para configuración de variables de entorno
-
-🧰 Requisitos Previos
-
-Node.js 18+
-
-MongoDB corriendo localmente (mongodb://localhost:27017/kanban)
-
-NPM o Yarn
-
-🖥️ Terminal 1 — Backend
+```bash
 cd backend
 npm install
 npm run start:dev
+```
 
+## El backend se ejecutará en:
 
-El backend se ejecutará en:
-
+```bash
 http://localhost:3000
+```
 
-🖥️ Terminal 2 — Frontend
+##🖥️ Terminal 2 — Frontend
+```bash
 cd frontend
 npm install
 npm run dev
+```
+##El frontend estará disponible en:
 
-
-El frontend estará disponible en:
-
+```bash
 http://localhost:5173
+```
 
-🌱 Generar Datos Iniciales (Seed)
+##🌱 Generar Datos Iniciales (Seed)
 
 Antes de usar la aplicación, necesitas generar datos de ejemplo (semilla) para que el tablero tenga columnas y tarjetas.
 
-1️⃣ Llama al endpoint de seed
+###1️⃣ Llama al endpoint de seed
 
 Abre tu navegador o Postman y entra a:
-
+```bash
 GET http://localhost:3000/api/seed
-
+```
 
 Esto creará:
 
@@ -74,27 +77,28 @@ Sus columnas por defecto (To Do, In Progress, Done).
 
 Varias tarjetas de ejemplo.
 
-2️⃣ Copia el boardId devuelto
+###2️⃣ Copia el boardId devuelto
 
 La respuesta será algo así:
-
+```json
 {
   "message": "Seed ejecutado correctamente",
   "boardId": "670123abc456def789012345"
 }
-
+```
 
 👉 Copia el valor del boardId, porque lo necesitarás en el frontend.
 
 3️⃣ Pega el boardId en el archivo App.tsx
 
 Abre el archivo:
-
+```bash
 frontend/src/App.tsx
-
+```
 
 Y reemplaza la línea que contiene el boardId por el que copiaste del seed:
 
+```typescript
 import Board from "./components/Board";
 import "./App.css";
 
@@ -111,23 +115,23 @@ function App() {
 }
 
 export default App;
-
+```
 
 Guarda los cambios y recarga el frontend.
 Ahora deberías ver el tablero cargado con las columnas y tarjetas generadas 🎉
 
 🧠 Qué se Logró
 
-✅ Visualización del tablero con columnas y tarjetas.
-✅ Mover tarjetas entre columnas con drag & drop fluido (@dnd-kit).
-✅ Sincronización de cambios en tiempo real con Socket.io.
-✅ Creación de nuevas tarjetas por columna.
-✅ Eliminación de tarjetas individualmente.
+- ✅ Visualización del tablero con columnas y tarjetas.
+- ✅ Mover tarjetas entre columnas con drag & drop fluido (@dnd-kit).
+- ✅ Sincronización de cambios en tiempo real con Socket.io.
+- ✅ Creación de nuevas tarjetas por columna.
+- ✅ Eliminación de tarjetas individualmente.
 
 🚧 Lo que Falta
 
-❌ Integración con N8N para exportar el backlog por correo en formato CSV.
-❌ Edición de columnas y tarjetas.
+-❌ Integración con N8N para exportar el backlog por correo en formato CSV.
+-❌ Edición de columnas y tarjetas.
 ❌ Seed automático al iniciar el backend (actualmente debe ejecutarse manualmente).
 
 🔹 En esta versión, el seed debe ejecutarse manualmente una sola vez, y el boardId copiado debe reemplazarse en el archivo App.tsx del frontend.
