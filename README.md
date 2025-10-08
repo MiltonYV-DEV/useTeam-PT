@@ -66,7 +66,7 @@ Antes de usar la aplicación, necesitas generar datos de ejemplo (semilla) para 
 
 Abre tu navegador o Postman y entra a:
 ```bash
-GET http://localhost:3000/api/seed
+GET http://localhost:3000/api/boards/seed
 ```
 
 Esto creará:
