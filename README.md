@@ -46,23 +46,23 @@ npm run start:dev
 http://localhost:3000
 ```
 
-##🖥️ Terminal 2 — Frontend
+## 🖥️ Terminal 2 — Frontend
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-##El frontend estará disponible en:
+## El frontend estará disponible en:
 
 ```bash
 http://localhost:5173
 ```
 
-##🌱 Generar Datos Iniciales (Seed)
+## 🌱 Generar Datos Iniciales (Seed)
 
 Antes de usar la aplicación, necesitas generar datos de ejemplo (semilla) para que el tablero tenga columnas y tarjetas.
 
-###1️⃣ Llama al endpoint de seed
+### 1️⃣ Llama al endpoint de seed
 
 Abre tu navegador o Postman y entra a:
 ```bash
@@ -77,7 +77,7 @@ Sus columnas por defecto (To Do, In Progress, Done).
 
 Varias tarjetas de ejemplo.
 
-###2️⃣ Copia el boardId devuelto
+### 2️⃣ Copia el boardId devuelto
 
 La respuesta será algo así:
 ```json
