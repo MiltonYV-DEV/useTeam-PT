@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { HealthController } from './health.controller';
+import { CardsModule } from './cards/cards.module';
+import { EventsModule } from './events/events.module';
+import { BoardsModule } from './boards/boards.module';
 
 @Module({
   imports: [
@@ -9,7 +12,6 @@ import { HealthController } from './health.controller';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-
     // Conexcion a MongoDB usando la variable del .env
     MongooseModule.forRootAsync({
       inject: [ConfigService],
@@ -17,8 +19,10 @@ import { HealthController } from './health.controller';
         uri: configService.get<string>('MONGODB_URI'),
       }),
     }),
+    CardsModule, // api/cards
+    EventsModule,
+    BoardsModule,
   ],
-
   // Controladores globales
   controllers: [HealthController],
 })

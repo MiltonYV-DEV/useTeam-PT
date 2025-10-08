@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Param, Patch, Post, Delete } from '@nestjs/common';
 import { CardsService } from './cards.service';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
@@ -24,5 +24,10 @@ export class CardsController {
   @Patch(':id/move')
   move(@Param('id') id: string, @Body() dto: MoveCardDto) {
     return this.cards.move(id, dto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.cards.remove(id);
   }
 }

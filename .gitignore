@@ -17,9 +17,6 @@ temp/
 .cache/
 
 # 🔧 Configuración del entorno
-.env
-.env.*
-!.env.example
 
 # 🚀 Archivos del sistema y del editor
 .DS_Store

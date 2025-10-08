@@ -10,11 +10,13 @@ import { Card, CardDocument } from './card.schema';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
 import { MoveCardDto } from './dto/move-card.dto';
+import { KanbanGateway } from '../events/kanban.gateway';
 
 @Injectable()
 export class CardsService {
   constructor(
     @InjectModel(Card.name) private readonly cardModel: Model<CardDocument>,
+    private readonly gateway: KanbanGateway,
   ) {}
 
   /**
@@ -44,6 +46,12 @@ export class CardsService {
       version: 0,
     });
 
+    this.gateway.emitToBoard(
+      String(created.boardId),
+      'card.created',
+      created.toObject(),
+    );
+
     return created;
   }
 
@@ -67,6 +75,11 @@ export class CardsService {
       throw new ConflictException('Version conflict or card not found ');
     }
 
+    this.gateway.emitToBoard(
+      String(updated.boardId),
+      'card.updated',
+      updated.toObject(),
+    );
     return updated;
   }
 
@@ -86,7 +99,25 @@ export class CardsService {
     card.version += 1;
     await card.save();
 
+    this.gateway.emitToBoard(String(card.boardId), 'card.moved', {
+      _id: card._id,
+      columnId: card.columnId,
+      position: card.position,
+      version: card.version,
+    });
+
     return card;
+  }
+
+  async remove(id: string) {
+    const deleted = await this.cardModel.findByIdAndDelete(id);
+    if (!deleted) throw new NotFoundException('Card not found');
+
+    // Notifica a todos en el board para refrescar
+    this.gateway.emitToBoard(String(deleted.boardId), 'card.moved', {
+      deletedId: id,
+    });
+    return { ok: true };
   }
 
   // Utilidad opcional: otener una card por id
